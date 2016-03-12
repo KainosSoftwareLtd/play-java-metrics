@@ -1,13 +1,14 @@
-This is small Playframework Java project with dropwizard metrics attached to it.
+This is small [Play Framework Java](https://www.playframework.com/documentation/2.3.x/JavaHome) project with [Dropwizard metrics](http://metrics.dropwizard.io/3.1.0/) attached to it.
 =================================
 
 # Overview
-This is skeleton playframework application which can be used for new project - it has dropwizard metrics instrumentation added on top of it.
+This is skeleton Play Framework application which can be used for new project - it has dropwizard metrics instrumentation added on top of it.
 
 This can be used as new application after removal of following code:
 * Global.onStart sets RandomProvider this is not needed.
 * RandomProvider and Impl are not needed
 * Integration tests which tests the metrics are not needed and can be replaced with proper application code.
+* Endpoints in Application.java. 
 
 # Running
 
