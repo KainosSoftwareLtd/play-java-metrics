@@ -12,18 +12,19 @@ import play.mvc.Result;
 import services.RandomProviderImpl;
 import services.RequestGenericHandler;
 import services.RequestGenericHandlerFactory;
+import services.WSRequestFactory;
 
 import java.lang.reflect.Method;
 
 /**
  * This expands Playframework default GlobalSettings to provide instrumentation for Memory, Garbage collector, number of active and all requests.
  * Additionaly it gives capability of annotating endpoints with @Timed so the stat for this endpoint will be collected.
- * There is /admin/metrics endpoint which dumps all the metrics to Json.
  */
 public class Global extends GlobalSettings {
 
     public static MetricRegistry metrics;
 
+    private boolean metricsEnabled = true;
     @Override
     public void onStart(Application app) {
         metrics = new MetricRegistry();
@@ -35,7 +36,12 @@ public class Global extends GlobalSettings {
         metrics.registerAll(new MemoryUsageGaugeSet());
         metrics.registerAll(new GarbageCollectorMetricSet());
 
+        metricsEnabled = app.configuration().getBoolean("metrics", true);
+
+        WSRequestFactory.setMetrics(metrics);
+
         controllers.Application.setRandomProvider(new RandomProviderImpl());
+
 
         super.onStart(app);
     }
@@ -43,15 +49,19 @@ public class Global extends GlobalSettings {
     @Override
     public Action onRequest(Http.Request request, Method actionMethod) {
 
-        final RequestGenericHandler handlerForEndpoint = RequestGenericHandlerFactory.getHandlerForEndpoint(Global.metrics.counter("activeRequests"), metrics.meter("allRequests"), actionMethod);
+        if (metricsEnabled) {
+            final RequestGenericHandler handlerForEndpoint = RequestGenericHandlerFactory.getHandlerForEndpoint(Global.metrics.counter("activeRequests"), Global.metrics.meter("allRequests"), actionMethod);
 
-        return new Action.Simple() {
+            return new Action.Simple() {
 
-            @Override
-            public F.Promise<Result> call(Http.Context ctx) throws Throwable {
-                return handlerForEndpoint.handle(delegate, ctx);
-            }
-        };
-
+                @Override
+                public F.Promise<Result> call(Http.Context ctx) throws Throwable {
+                    return handlerForEndpoint.handle(delegate, ctx);
+                }
+            };
+        }
+        else {
+            return super.onRequest(request, actionMethod);
+        }
     }
 }

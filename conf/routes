@@ -4,8 +4,11 @@
 
 # Home page
 GET        /                                 controllers.Application.index()
+GET        /helloWorld                       controllers.Application.helloWorld()
 GET        /notInstrumented                  controllers.Application.notInstrumented()
 GET        /instrumentedWithException        controllers.Application.instrumentedWithException()
+GET        /client                           controllers.Application.client()
+GET        /clientNotInstrumented            controllers.Application.clientNotInstrumented()
 
 # Metrics
 GET        /admin                            controllers.Application.metrics()
