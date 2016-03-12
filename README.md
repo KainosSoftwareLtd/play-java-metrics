@@ -30,6 +30,4 @@ clientRequest.{givenName} metrics.
 * Refactor instrumentation of client
 * Add support to count only instrumentation for client
 
-=======
->>>>>>> cad32b716c244919b4b5c4ac96e2137daf7e26fb
 Open for suggestions and comments.
