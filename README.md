@@ -1,12 +1,10 @@
-This is small [Play Framework Java](https://www.playframework.com/documentation/2.3.x/JavaHome) project with [Dropwizard metrics](http://metrics.dropwizard.io/3.1.0/) attached to it.
-=================================
+# This is small [Play Framework Java](https://www.playframework.com/documentation/2.3.x/JavaHome) project with [Dropwizard metrics](http://metrics.dropwizard.io/3.1.0/) attached to it.
 
-# Overview
-This is skeleton Play Framework application which can be used for new project - it has dropwizard metrics instrumentation added on top of it.
+This is a skeleton Play Framework application which can be used for new projects - it has Dropwizard metrics instrumentation added on top of it.
 
-This can be used as new application after removal of following code:
-* Global.onStart sets RandomProvider this is not needed.
-* RandomProvider and Impl are not needed
+Repository can be used as a new application after removal of following code:
+* Global.onStart sets RandomProvider
+* RandomProvider and Impl
 * Integration tests which tests the metrics are not needed and can be replaced with proper application code.
 * Endpoints in Application.java. 
 
@@ -32,4 +30,6 @@ clientRequest.{givenName} metrics.
 * Refactor instrumentation of client
 * Add support to count only instrumentation for client
 
+=======
+>>>>>>> cad32b716c244919b4b5c4ac96e2137daf7e26fb
 Open for suggestions and comments.
