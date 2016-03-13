@@ -2,6 +2,8 @@
 
 This is a skeleton Play Framework application which can be used for new projects - it has Dropwizard metrics instrumentation added on top of it.
 
+It uses Play Framework 2.3.10 version - it is last one supported by Java 1.7. The implementation would be different for newer, but unfortunately in my current project we cannot upgrade.
+
 Repository can be used as a new application after removal of following code:
 * Global.onStart sets RandomProvider
 * RandomProvider and Impl
